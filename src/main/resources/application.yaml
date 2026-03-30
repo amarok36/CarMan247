@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: CarMan247
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/carman_db
+    username: postgres
+    password: postgres
