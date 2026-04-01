@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "fuel_types")
-public class FuelType {
+@Table(name = "transmissions")
+public class Transmissions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
