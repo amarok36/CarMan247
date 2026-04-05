@@ -50,4 +50,3 @@ VALUES
     ('Tesla Model Y'),
     ('Tesla Model X'),
     ('Tesla Model 3');
-
