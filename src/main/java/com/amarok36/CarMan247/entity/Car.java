@@ -39,10 +39,10 @@ public class Car {
 
     @ManyToOne
     @JoinColumn(name = "fuel_type_id")
-    private FuelType FuelType;
+    private FuelType fuelType;
 
     @Column(name = "engine_capacity")
-    private Double EngineCapacity;
+    private Double engineCapacity;
 
     @ManyToOne
     @JoinColumn(name = "transmission_id")
