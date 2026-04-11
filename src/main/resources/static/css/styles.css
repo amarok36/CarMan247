@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000000;
+    color: #e8edf2;
+    font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    scroll-behavior: smooth;
+}
+
+.header {
+    top: 0;
+    background-color: #000000;
+    border-bottom: 1px solid rgba(150, 0, 24, 0.5);
+}
+
+.header-container {
+    max-width: 1280px;
+    min-width: 640px;
+    margin: 0 auto;
+    padding: 0.9rem 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-link:hover,
+.footer-link:hover {
+    opacity: 0.85;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e8edf2;
+}
+
+.logo-text-red {
+    color: rgba(150, 0, 24);
+}
+
+.main-nav {
+    display: flex;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link,
+.footer-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+    color: rgba(150, 0, 24);
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 2.5rem 1.8rem 4rem 1.8rem;
+}
+
+.page-header {
+    text-align: left;
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+}
+
+.divider {
+    width: 70px;
+    height: 3px;
+    background: rgba(150, 0, 24, 0.5);
+    border-radius: 3px;
+    margin-top: 0.5rem;
+}
+
+.page-section {
+    margin-bottom: 2.8rem;
+}
+
+.page-section h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+}
+
+.stats-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+p {
+    margin-bottom: 1.2rem;
+    color: #e2e8f0;
+}
+
+.footer {
+    margin-top: 3.5rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid rgba(150, 0, 24, 0.5);;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
