@@ -30,4 +30,9 @@ public class CarController {
     public ResponseEntity<List<CarDto>> findAllCars() {
         return ResponseEntity.ok(carService.getCarList());
     }
+
+    @GetMapping("/count/available")
+    public ResponseEntity<Long> getAvailableCarsCount() {
+        return ResponseEntity.ok(carService.getAvailableCarsCount());
+    }
 }

@@ -22,4 +22,8 @@ public class CarService {
     public List<CarDto> getCarList() {
         return carRepository.getAllCars();
     }
+
+    public long getAvailableCarsCount() {
+        return carRepository.getAvailableCarsCount();
+    }
 }

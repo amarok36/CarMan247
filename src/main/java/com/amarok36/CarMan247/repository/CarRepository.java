@@ -33,4 +33,11 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
                 FROM Car c
             """)
     List<CarDto> getAllCars();
+
+    @Query("""
+              SELECT COUNT(c)
+              FROM Car c
+              WHERE c.status.id = 1
+            """)
+    Long getAvailableCarsCount();
 }
