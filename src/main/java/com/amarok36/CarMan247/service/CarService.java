@@ -26,4 +26,8 @@ public class CarService {
     public long getAvailableCarsCount() {
         return carRepository.getAvailableCarsCount();
     }
+
+    public long getRentedCarsCount() {
+        return carRepository.getRentedCarsCount();
+    }
 }
