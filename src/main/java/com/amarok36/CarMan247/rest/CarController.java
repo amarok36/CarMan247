@@ -35,4 +35,9 @@ public class CarController {
     public ResponseEntity<Long> getAvailableCarsCount() {
         return ResponseEntity.ok(carService.getAvailableCarsCount());
     }
+
+    @GetMapping("/count/rented")
+    public ResponseEntity<Long> getRentedCarsCount() {
+        return ResponseEntity.ok(carService.getRentedCarsCount());
+    }
 }
