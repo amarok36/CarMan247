@@ -1,9 +1,11 @@
 const cars_count = document.getElementById('s_cars_count');
 const available_cars_count = document.getElementById('s_available_cars_count');
+const rented_cars_count = document.getElementById('s_rented_cars_count');
 
 document.addEventListener('DOMContentLoaded', async function () {
     await GetCarsCount();
     await GetAvailableCarsCount();
+    await GetRentedCarsCount();
 })
 
 async function GetCarsCount() {
@@ -31,5 +33,19 @@ async function GetAvailableCarsCount() {
         available_cars_count.innerText = await response.json();
     } catch (error) {
         console.error("Ошибка выполнения запроса (счётчик доступных автомобилей): " + error);
+    }
+}
+
+async function GetRentedCarsCount() {
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/cars/count/rented');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        rented_cars_count.innerText = await response.json();
+    } catch (error) {
+        console.error("Ошибка выполнения запроса (счётчик арендованных автомобилей): " + error);
     }
 }
