@@ -52,8 +52,8 @@ async function GetRentedCarsCount() {
     }
 }
 
-async function LoadCarsTable(){
-    try{
+async function LoadCarsTable() {
+    try {
         const response = await fetch('http://localhost:8080/api/v1/cars')
 
         if (!response.ok) {
@@ -94,11 +94,11 @@ async function LoadCarsTable(){
 }
 
 function FormatBoolean(value) {
-    if(value === true) return 'да';
+    if (value === true) return 'да';
     else return 'нет';
 }
 
-function FormatDate(value){
+function FormatDate(value) {
     const date = new Date(value)
     return date.toLocaleDateString('ru-RU')
 }
