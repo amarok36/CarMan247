@@ -1,7 +1,5 @@
 package com.amarok36.CarMan247.dto;
 
-import com.amarok36.CarMan247.entity.*;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
