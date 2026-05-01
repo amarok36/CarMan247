@@ -1,16 +1,24 @@
 const cars_count = document.getElementById('s_cars_count');
 const available_cars_count = document.getElementById('s_available_cars_count');
 const rented_cars_count = document.getElementById('s_rented_cars_count');
+
 const cars_table_body = document.getElementById('cars-table-body');
+const previousButton = document.getElementById('previous-page');
+const nextButton = document.getElementById('next-page');
+
+let currentPage = 1;
+let totalPages = 1;
+const rowsPerPage = 20;
 
 document.addEventListener('DOMContentLoaded', async function () {
-    await GetCarsCount();
-    await GetAvailableCarsCount();
-    await GetRentedCarsCount();
-    await LoadCarsTable();
+    await getCarsCount();
+    await getAvailableCarsCount();
+    await getRentedCarsCount();
+    await loadCarsPage();
+    doPaginationControls();
 })
 
-async function GetCarsCount() {
+async function getCarsCount() {
     try {
         const response = await fetch('http://localhost:8080/api/v1/cars/count');
 
@@ -24,7 +32,7 @@ async function GetCarsCount() {
     }
 }
 
-async function GetAvailableCarsCount() {
+async function getAvailableCarsCount() {
     try {
         const response = await fetch('http://localhost:8080/api/v1/cars/count/available');
 
@@ -38,7 +46,7 @@ async function GetAvailableCarsCount() {
     }
 }
 
-async function GetRentedCarsCount() {
+async function getRentedCarsCount() {
     try {
         const response = await fetch('http://localhost:8080/api/v1/cars/count/rented');
 
@@ -52,53 +60,100 @@ async function GetRentedCarsCount() {
     }
 }
 
-async function LoadCarsTable() {
+function renderTable(cars) {
+    if (cars.length === 0) {
+        cars_table_body.innerHTML = '<tr><td colspan="16">Нет данных</td></tr>';
+        return;
+    }
+
+    cars_table_body.innerHTML = cars.map(car => ` 
+    <tr>
+        <td>${car.id}</td>
+        <td>${car.statusTitle}</td>
+        <td>${car.serviceClassTitle}</td>
+        <td>${car.modelTitle}</td>
+        <td>${car.yearManufacture}</td>
+        <td>${car.color}</td>
+        <td>${car.fuelTypeTitle}</td>
+        <td>${car.engineCapacity || '-'}</td>
+        <td>${car.transmissionTitle}</td>
+        <td>${car.vehicleDriveTitle}</td>
+        <td>${car.currentMileage.toLocaleString()}</td>
+        <td>${formatDate(car.maintenanceDate)}</td>
+        <td>${formatBoolean(car.airConditioner)}</td>
+        <td>${formatBoolean(car.heatSeats)}</td>
+        <td>${formatBoolean(car.navigator)}</td>
+        <td>${car.options}</td>
+    </tr>
+    `).join('');
+}
+
+function updateButtonsState() {
+    if (currentPage === 1) {
+        previousButton.disabled = true;
+    } else {
+        previousButton.disabled = false;
+    }
+
+    if (currentPage === totalPages) {
+
+        nextButton.disabled = true;
+    } else {
+        nextButton.disabled = false;
+    }
+
+    if (totalPages === 0) {
+        nextButton.disabled = true;
+    }
+}
+
+async function loadCarsPage() {
     try {
-        const response = await fetch('http://localhost:8080/api/v1/cars')
+        const response = await fetch(`http://localhost:8080/api/v1/cars?page=${currentPage - 1}&size=${rowsPerPage}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const cars = await response.json();
+        const pageData = await response.json();
 
-        if (cars.length === 0) {
-            cars_table_body.innerHTML = '<tr><td colspan="16">Нет данных</td></tr>';
-            return;
-        }
+        const cars = pageData.content;
+        totalPages = pageData.totalPages;
+        currentPage = pageData.number + 1;
 
-        cars_table_body.innerHTML = cars.map(car => `
-             <tr>
-                <td>${car.id}</td>
-                <td>${car.statusTitle}</td>
-                <td>${car.serviceClassTitle}</td>
-                <td>${car.modelTitle}</td>
-                <td>${car.yearManufacture}</td>
-                <td>${car.color}</td>
-                <td>${car.fuelTypeTitle}</td>
-                <td>${car.engineCapacity}</td>
-                <td>${car.transmissionTitle}</td>
-                <td>${car.vehicleDriveTitle}</td>
-                <td>${car.currentMileage.toLocaleString()}</td>
-                <td>${FormatDate(car.maintenanceDate)}</td>
-                <td>${FormatBoolean(car.airConditioner)}</td>
-                <td>${FormatBoolean(car.heatSeats)}</td>
-                <td>${FormatBoolean(car.navigator)}</td>
-                <td>${car.options}</td>
-            </tr>
-        `).join('');
+        renderTable(cars);
+        updateButtonsState();
     } catch (error) {
-        console.error("Ошибка выполнения запроса (таблица автомобилей): " + error);
-        tableBody.innerHTML = '<tr><td colspan="16">Ошибка загрузки данных</td></tr>';
+        console.error("Ошибка выполнения запроса: " + error);
+        cars_table_body.innerHTML = '<tr><td colspan="16">Ошибка загрузки данных</td></tr>';
     }
 }
 
-function FormatBoolean(value) {
-    if (value === true) return 'да';
+async function goToPreviousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        await loadCarsPage();
+    }
+}
+
+async function goToNextPage() {
+    if (currentPage < totalPages) {
+        currentPage++;
+        await loadCarsPage();
+    }
+}
+
+function doPaginationControls() {
+    previousButton.addEventListener('click', goToPreviousPage);
+    nextButton.addEventListener('click', goToNextPage);
+}
+
+function formatBoolean(value) {
+    if (value) return 'да';
     else return 'нет';
 }
 
-function FormatDate(value) {
+function formatDate(value) {
     const date = new Date(value)
     return date.toLocaleDateString('ru-RU')
 }

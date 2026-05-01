@@ -5,20 +5,17 @@
 }
 
 body {
-    background-color: #000000;
+    background-color: #111827;
     color: #e8edf2;
-    font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+    font-family: Segoe UI, Roboto, Helvetica, sans-serif;
     line-height: 1.6;
     font-size: 1.05rem;
-    scroll-behavior: smooth;
 }
 
 .header {
     position: sticky;
     top: 0;
-    background-color: #000000;
-    border-bottom: 1px solid rgba(150, 0, 24, 0.5);
-    z-index: 100;
+    background-color: #2b4578;
 }
 
 .header-container {
@@ -44,12 +41,8 @@ body {
 
 .logo-text {
     font-size: 1.25rem;
-    font-weight: 700;
+    font-weight: bold;
     color: #e8edf2;
-}
-
-.logo-text-red {
-    color: rgba(150, 0, 24);
 }
 
 .main-nav {
@@ -60,34 +53,26 @@ body {
     display: flex;
     gap: 2rem;
     list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-menu li {
-    margin: 0;
-    padding: 0;
 }
 
 .nav-link,
 .footer-link {
     color: #cbd5e1;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: normal;
     font-size: 0.95rem;
     padding: 0.5rem 0;
 }
 
 .nav-link:hover {
-    color: rgba(150, 0, 24);
-    text-decoration: none;
+    color: #e8edf2;
 }
 
 .container {
     max-width: 1280px;
     min-width: 640px;
     margin: 0 auto;
-    padding: 2.5rem 1.8rem 4rem 1.8rem;
+    padding: 2.5rem 1.8rem 2rem 1.8rem;
 }
 
 .page-header {
@@ -97,7 +82,7 @@ body {
 
 .page-header h1 {
     font-size: 3em;
-    font-weight: 700;
+    font-weight: bold;
     letter-spacing: -0.02em;
     margin-bottom: 0.75rem;
 }
@@ -105,7 +90,7 @@ body {
 .divider {
     width: 70px;
     height: 3px;
-    background: rgba(150, 0, 24, 0.5);
+    background: #3d7AA8;
     border-radius: 3px;
     margin-top: 0.5rem;
 }
@@ -140,13 +125,14 @@ body {
 .cars-table td {
     padding: 10px 8px;
     text-align: center;
-    border: 1px solid #333;
+    border: 1px solid #2b4578;
 }
 
 .cars-table th {
-    background: #1f1f1f;
+    background: #1f2937;
     font-weight: bold;
-    top: 0;
+    position: sticky;
+    top: 60px;
 }
 
 p {
@@ -154,11 +140,26 @@ p {
     color: #e2e8f0;
 }
 
-.footer {
-    margin-top: 3.5rem;
-    padding-top: 1.8rem;
-    border-top: 1px solid rgba(150, 0, 24, 0.5);;
-    font-size: 0.85rem;
+.pagination-controls {
     text-align: center;
 }
 
+.pagination-controls button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.pagination-controls button:hover {
+    color: #e8edf2;
+}
+
+.pagination-controls button:disabled {
+    color: #1f2937;
+}
+
+.footer {
+    text-align: center;
+}
