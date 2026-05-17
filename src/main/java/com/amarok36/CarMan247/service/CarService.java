@@ -34,8 +34,15 @@ public class CarService {
         return carRepository.getRentedCarsCount();
     }
 
-   public Page<CarDto> getCarListPaginated(int page, int size) {
+    public Page<CarDto> getCarListPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return carRepository.getAllCarsPaginated(pageable);
-   }
+    }
+
+    public void deleteCar(Integer id) {
+        if (!carRepository.existsById(id)) {
+            throw new RuntimeException("Автомобиль с id " + id + " не найден");
+        }
+        carRepository.deleteById(id);
+    }
 }
