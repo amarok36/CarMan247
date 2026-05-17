@@ -2,10 +2,14 @@ const cars_count = document.getElementById('s_cars_count');
 const available_cars_count = document.getElementById('s_available_cars_count');
 const rented_cars_count = document.getElementById('s_rented_cars_count');
 
+const deleteButton = document.getElementById('delete-car'); // Добавлено
+
 const cars_table_body = document.getElementById('cars-table-body');
+
 const previousButton = document.getElementById('previous-page');
 const nextButton = document.getElementById('next-page');
 
+let selectedCarId = null;
 let currentPage = 1;
 let totalPages = 1;
 const rowsPerPage = 20;
@@ -16,6 +20,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     await getRentedCarsCount();
     await loadCarsPage();
     doPaginationControls();
+
+    if(deleteButton) {
+        deleteButton.addEventListener('click', deleteSelectedCar);
+    }
 })
 
 async function getCarsCount() {
@@ -67,7 +75,7 @@ function renderTable(cars) {
     }
 
     cars_table_body.innerHTML = cars.map(car => ` 
-    <tr>
+    <tr data-car-id="${car.id}">
         <td>${car.id}</td>
         <td>${car.statusTitle}</td>
         <td>${car.serviceClassTitle}</td>
@@ -86,6 +94,8 @@ function renderTable(cars) {
         <td>${car.options}</td>
     </tr>
     `).join('');
+
+    selectRow();
 }
 
 function updateButtonsState() {
@@ -123,6 +133,11 @@ async function loadCarsPage() {
 
         renderTable(cars);
         updateButtonsState();
+
+        selectedCarId = null;
+        if(deleteButton) {
+            deleteButton.disabled = true;
+        }
     } catch (error) {
         console.error("Ошибка выполнения запроса: " + error);
         cars_table_body.innerHTML = '<tr><td colspan="16">Ошибка загрузки данных</td></tr>';
@@ -156,4 +171,58 @@ function formatBoolean(value) {
 function formatDate(value) {
     const date = new Date(value)
     return date.toLocaleDateString('ru-RU')
+}
+
+function selectRow() {
+    let rows = document.querySelectorAll('#cars-table-body tr');
+    for (let i = 0; i < rows.length; i++) {
+        let currentRow = rows[i];
+
+        currentRow.addEventListener('click', function () {
+
+            for (let j = 0; j < rows.length; j++) {
+                let clearRow = rows[j];
+                clearRow.classList.remove('selected');
+            }
+            currentRow.classList.add('selected')
+
+            selectedCarId = parseInt(currentRow.getAttribute('data-car-id'));
+
+            if(deleteButton) {
+                deleteButton.disabled = false;
+            }
+        });
+    }
+}
+
+async function  deleteSelectedCar() {
+
+    const confirmed = confirm(`Вы уверены, что хотите удалить автомобиль ${selectedCarId}?`);
+    if (!confirmed) return;
+
+    try{
+        const response = await fetch(`http://localhost:8080/api/v1/cars/${selectedCarId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        alert(`Автомобиль ${selectedCarId} удален`);
+
+        await getCarsCount();
+        await getAvailableCarsCount();
+        await getRentedCarsCount();
+
+        selectedCarId = null;
+        if (deleteButton) {
+            deleteButton.disabled = true;
+        }
+
+        await loadCarsPage();
+    } catch (error) {
+        console.error("Ошибка выполнения запроса (удаление автомобиля): " + error);
+        alert(`Ошибка удаления автомобиля: ${error.message}`);
+    }
 }

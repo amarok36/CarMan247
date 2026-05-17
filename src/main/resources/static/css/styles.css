@@ -96,7 +96,7 @@ body {
 }
 
 .page-section {
-    margin-bottom: 2.8rem;
+    margin-bottom: 2.6rem;
 }
 
 .page-section h2 {
@@ -110,6 +110,25 @@ body {
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
+}
+
+.crud-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #182a4d;
+    color:  #cbd5e1;
+    border: 1px solid #2b4578;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    background-color: #111827;
+    color: #1f2937;
 }
 
 .table-container {
@@ -133,6 +152,16 @@ body {
     font-weight: bold;
     position: sticky;
     top: 60px;
+}
+
+.cars-table tbody tr:hover{
+    background-color: #182a4d;
+    cursor: pointer;
+}
+
+.cars-table tbody tr.selected {
+    background-color: #182a4d;
+    border-left: 3px solid #3d7AA8;
 }
 
 p {
